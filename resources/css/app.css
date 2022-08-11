@@ -1,3 +1,83 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --primaryA: rgb(13, 14, 15); /* #0d0e0f */
+    --primaryB: rgba(13, 14, 15, 0.5);
+    --mid: rgb(19, 20, 24);
+    --secondaryA: rgb(28, 30, 36);
+    --secondaryB: rgb(28, 30, 36, 0.6);
+    --textA: rgb(255, 255, 254);
+    --textB: #d3d3d3;
+    --textC: #708090;
+    --clearA: rgba(255, 255, 255, 0.01);
+    --clearB: rgba(0, 0, 0, 0.01);
+    --accentA: rgb(109, 142, 238); /*  #6d8eee */
+    --accentB: rgba(109, 142, 238, 0.25);
+    --blurA: linear-gradient(
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.05)
+    );
+    --blurB: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05));
+    --shadowA: rgb(0 0 0 / 5%) 2px 4px 10px;
+    --transitionA: 0.5s ease;
+    --lineA: 1px solid rgba(255, 255, 255, 0.1);
+}
+body {
+    font-family: "Poppins", sans-serif;
+    color: var(--textA);
+}
+
+body::-webkit-scrollbar {
+    width: 0.25rem; /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+    background: var(--primaryA); /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: var(--accentA); /* color of the scroll thumb */
+    border-radius: 20px; /* roundness of the scroll thumb */
+}
+.textA {
+    color: var(--textA);
+}
+.textB {
+    color: var(--textB);
+}
+.textC {
+    color: var(--textC);
+}
+
+.bgPrimaryA {
+    background-color: var(--primaryA);
+}
+.bgPrimaryB {
+    background-color: var(--primaryB);
+}
+.bgMid {
+    background-color: var(--mid);
+}
+.bgSecondaryA {
+    background-color: var(--secondaryA);
+}
+.bgSecondaryB {
+    background-color: var(--secondaryB);
+}
+.bg-img {
+    background-image: url("/assets/img/bgB.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto;
+}
+.bg-imgB {
+    background-image: linear-gradient(
+        30deg,
+        rgb(13, 14, 15),
+        rgb(13, 14, 15),
+        rgb(13, 14, 15),
+        rgb(109, 142, 238)
+    );
+}

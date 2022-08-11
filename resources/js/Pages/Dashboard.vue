@@ -1,26 +1,45 @@
 <script setup>
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import { Head } from '@inertiajs/inertia-vue3';
+import { Head } from "@inertiajs/inertia-vue3";
+import CardLineChart from "@/Components/Cards/CardLineChart.vue";
+import CardBarChart from "@/Components/Cards/CardBarChart.vue";
+import CardPageVisits from "@/Components/Cards/CardPageVisits.vue";
+import CardSocialTraffic from "@/Components/Cards/CardSocialTraffic.vue";
+import LayoutHeader from "@/Layouts/LayoutHeader.vue";
+import { permissions } from "@/Plugins/permissions";
+const props = defineProps({
+    can: Object,
+});
+permissions.canCreateUser = props.can.create_user;
 </script>
-
+<script>
+import LayoutAuthenticated from "@/Layouts/LayoutAuthenticated.vue";
+export default {
+    layout: LayoutAuthenticated,
+};
+</script>
+<style lang="scss" scoped>
+.dash-bottom {
+    margin: 2rem 0;
+}
+</style>
 <template>
     <Head title="Dashboard" />
+    <LayoutHeader> Dashboard </LayoutHeader>
 
-    <BreezeAuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
-            </h2>
-        </template>
-
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200">
-                        You're logged in!
-                    </div>
-                </div>
-            </div>
+    <div class="flex flex-wrap scroll-hide">
+        <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+            <CardLineChart />
         </div>
-    </BreezeAuthenticatedLayout>
+        <div class="w-full xl:w-4/12 px-4">
+            <CardBarChart />
+        </div>
+    </div>
+    <div class="dash-bottom flex flex-wrap mt-4">
+        <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+            <CardPageVisits />
+        </div>
+        <div class="w-full xl:w-4/12 px-4">
+            <CardSocialTraffic />
+        </div>
+    </div>
 </template>
