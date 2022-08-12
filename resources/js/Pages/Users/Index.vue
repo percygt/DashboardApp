@@ -7,6 +7,9 @@ import debounce from "lodash/debounce";
 import UpdateUser from "@/Components/Modal/UpdateUser.vue";
 import AddUser from "@/Components/Modal/AddUser.vue";
 import AccountPlusIcon from "vue-material-design-icons/AccountPlus.vue";
+import AccountEditIcon from "vue-material-design-icons/AccountEdit.vue";
+import TrashCanIcon from "vue-material-design-icons/TrashCan.vue";
+
 const props = defineProps({ users: Object, filters: Object, can: Object });
 const isModalOpen = ref(false);
 const isAddUserOpen = ref(false);
@@ -29,6 +32,12 @@ watch(
         );
     }, 300)
 );
+
+const destroy = (id) => {
+    if (confirm("Are  you sure?")) {
+        Inertia.delete(route("users.destroy", id));
+    }
+};
 </script>
 <script>
 import LayoutAuthenticated from "@/Layouts/LayoutAuthenticated.vue";
@@ -48,23 +57,24 @@ export default {
     background-color: var(--secondaryA);
     margin: 0 1rem;
     .button-container {
-        margin: 0 1rem;
+        margin: 0 2rem;
         display: flex;
-        width: calc(100% - 2rem);
+        width: calc(100% - 4rem);
         justify-content: space-between;
         align-items: center;
         button {
             display: flex;
-            width: 6rem;
+            width: 8rem;
             height: 2rem;
             justify-content: center;
             gap: 0.25rem;
             align-items: center;
-            font-size: 0.8rem;
+            font-size: 1rem;
             line-height: 1rem;
             transition: var(--transitionB);
             &:hover {
                 color: var(--textC);
+                text-decoration: underline;
             }
             .add-user {
                 margin-top: 0.15rem;
@@ -100,16 +110,21 @@ export default {
     </LayoutHeader>
     <div class="user-table overflow-x-auto relative shadow-md sm:rounded-lg">
         <div class="button-container">
-            <button
-                @click="
-                    {
-                        isAddUserOpen = true;
-                    }
-                "
-            >
-                <AccountPlusIcon :size="20" />
-                <span class="add-user">Add User</span>
-            </button>
+            <div>
+                <button
+                    class="text-blue-600"
+                    v-if="props.can.create_user"
+                    @click="
+                        {
+                            isAddUserOpen = true;
+                        }
+                    "
+                >
+                    <AccountPlusIcon :size="20" />
+                    <span class="add-user">Create User</span>
+                </button>
+            </div>
+
             <input
                 v-model="search"
                 type="text"
@@ -149,7 +164,7 @@ export default {
                     <td class="py-4 px-6">
                         {{ user.role }}
                     </td>
-                    <td class="py-4 px-6">
+                    <td class="flex py-4 px-6">
                         <a
                             @click="
                                 {
@@ -160,10 +175,18 @@ export default {
                                     userData.role = user.role;
                                 }
                             "
+                            v-if="user.can.update"
                             href="#"
-                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                            >Edit</a
-                        >
+                            class="font-medium text-blue-600 dark:text-blue-500 mx-1"
+                            ><AccountEditIcon
+                        /></a>
+                        <a
+                            @click="destroy(user.id)"
+                            v-if="user.can.update"
+                            href="#"
+                            class="font-medium text-blue-600 dark:text-blue-500 mx-1"
+                            ><TrashCanIcon
+                        /></a>
                     </td>
                 </tr>
             </tbody>

@@ -28,12 +28,9 @@ Route::get('/', function () {
 
 
 Route::get('/users',[UserController::class, 'index']) ->name('users');
-
 Route::post('/users',[UserController::class, 'store']);
 Route::post('/users/{id}',[UserController::class, 'update'])->name('users.update');;
-Route::get('/users/create', function () {
-  return Inertia::render('Users/Create');
-})->can('create',User::class)->name('users.create');
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');;
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard',['can' => [

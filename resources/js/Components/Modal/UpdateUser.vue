@@ -48,7 +48,7 @@ computed;
                         class="close absolute top-2 right-4 cursor-pointer text-xl"
                         >&times;</span
                     >
-
+                    <h1>Edit User</h1>
                     <form @submit.prevent="submit">
                         <div class="mt-4 relative">
                             <div
@@ -144,6 +144,11 @@ computed;
 </template>
 
 <style lang="scss" scoped>
+h1 {
+    display: flex;
+    justify-content: center;
+    font-weight: 900;
+}
 .modal-bg {
     position: fixed;
     top: 0;

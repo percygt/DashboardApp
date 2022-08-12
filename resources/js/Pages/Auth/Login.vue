@@ -82,9 +82,15 @@ form {
 
         <div class="flex items-center justify-end mt-4">
             <Link
+                :href="route('register')"
+                class="underline text-sm textB hover:text-gray-600 pr-3"
+            >
+                Not yet Registered?
+            </Link>
+            <Link
                 v-if="canResetPassword"
                 :href="route('password.request')"
-                class="underline text-sm textB hover:text-gray-600"
+                class="underline text-sm textB hover:text-gray-600 px-3"
             >
                 Forgot your password?
             </Link>

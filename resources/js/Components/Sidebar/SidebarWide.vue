@@ -7,6 +7,10 @@ import { onMounted, onUnmounted, ref } from "vue";
 import { permissions, sidebar } from "@/Plugins/eventBus";
 import ViewDashboardIcon from "vue-material-design-icons/ViewDashboard.vue";
 import AccountGroupIcon from "vue-material-design-icons/AccountGroup.vue";
+import GithubIcon from "vue-material-design-icons/Github.vue";
+import LinkedinIcon from "vue-material-design-icons/Linkedin.vue";
+import WebIcon from "vue-material-design-icons/Web.vue";
+import Telegram from "@/Assets/Images/Telegram.vue";
 
 const closeOnEscape = (e) => {
     if (open.value && e.key === "Escape") {
@@ -25,24 +29,51 @@ onUnmounted(() => document.removeEventListener("keydown", closeOnEscape));
             <AppLogoB class="app-logo" />
         </Link>
     </div>
+    <div class="sidebar-content">
+        <div className="sidebar-b">
+            <span class="sidebar-b-label">NAVIGATION</span>
+            <div class="sidebar-b-link">
+                <NavLink
+                    :href="route('dashboard')"
+                    :active="route().current('dashboard')"
+                >
+                    <ViewDashboardIcon :size="30" />
+                    Dashboard
+                </NavLink>
+                <NavLink
+                    :href="route('users')"
+                    :active="$page.url === '/users' ? true : false"
+                >
+                    <AccountGroupIcon :size="30" />
+                    User Management
+                </NavLink>
+            </div>
+        </div>
+        <div className="sidebar-c">
+            <div class="sidebar-c-link">
+                <a
+                    href="https://github.com/percygt/DashboardApp"
+                    target="_blank"
+                    ><WebIcon :size="30"
+                /></a>
 
-    <div className="sidebar-b">
-        <span class="sidebar-b-label">NAVIGATION</span>
-        <div class="sidebar-b-link">
-            <NavLink
-                :href="route('dashboard')"
-                :active="route().current('dashboard')"
-            >
-                <ViewDashboardIcon :size="30" />
-                Dashboard
-            </NavLink>
-            <NavLink
-                :href="route('users')"
-                :active="$page.url === '/users' ? true : false"
-            >
-                <AccountGroupIcon :size="30" />
-                User Management
-            </NavLink>
+                <a
+                    href="https://github.com/percygt/DashboardApp"
+                    target="_blank"
+                    ><LinkedinIcon :size="30"
+                /></a>
+                <a
+                    href="https://github.com/percygt/DashboardApp"
+                    target="_blank"
+                    ><GithubIcon :size="30"
+                /></a>
+                <a
+                    href="https://github.com/percygt/DashboardApp"
+                    target="_blank"
+                >
+                    <Telegram />
+                </a>
+            </div>
         </div>
     </div>
 </template>
@@ -65,27 +96,46 @@ onUnmounted(() => document.removeEventListener("keydown", closeOnEscape));
     }
 }
 
-.sidebar-b {
+.sidebar-content {
     display: flex;
     flex-direction: column;
-    padding: 0 2rem;
-    gap: 1rem;
-    margin-top: 1.5rem;
-    .sidebar-b-label {
-        font-size: 0.7rem;
-        color: var(--textC);
-    }
-    .sidebar-b-link {
-        margin-top: 1rem;
+    justify-content: space-between;
+    height: calc(100vh - 6rem);
+    .sidebar-b {
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
+        padding: 0 2rem;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        .sidebar-b-label {
+            font-size: 0.7rem;
+            color: var(--textC);
+        }
+        .sidebar-b-link {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
 
-        > * {
+            > * {
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+                width: 15rem;
+            }
+        }
+    }
+    .sidebar-c {
+        padding: 1rem;
+
+        .sidebar-c-link {
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid var(--textC);
+            align-items: center;
+            padding-top: 1rem;
             display: flex;
             gap: 1rem;
-            align-items: center;
-            width: 15rem;
         }
     }
 }

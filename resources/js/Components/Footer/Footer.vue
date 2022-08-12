@@ -7,16 +7,17 @@ import GithubIcon from "vue-material-design-icons/Github.vue";
             ><GithubIcon :size="20" />Github</a
         >
 
-        <span>© 2022 PRCY. Built using Laravel,Vue.js and Inertia.js.</span>
+        <span>© 2022 PRCY. Built using Laravel 9, Vue 3 and Inertia.</span>
     </div>
 </template>
 
 <style lang="scss" scoped>
 .footer-container {
+    color: var(--textC);
     background-color: var(--secondaryB);
     display: flex;
     z-index: 99999;
-    color: white;
+
     align-items: center;
     height: 2rem;
     justify-content: space-between;

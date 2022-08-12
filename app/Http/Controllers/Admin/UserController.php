@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
-
 class UserController extends Controller
 {
     /**
@@ -125,7 +124,7 @@ class UserController extends Controller
           'password' => Hash::make($request->password),
       ]);
 
-      return redirect('/users');
+
     }
 
     /**
@@ -134,8 +133,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id )
     {
-        //
+
+      User::where('id', $id)->delete();
+
+      return back()->withInput()->with('mesage','User deleted cuccessfully');
     }
 }
