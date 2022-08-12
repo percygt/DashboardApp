@@ -55,7 +55,8 @@ class UserPolicy
     public function update(User $user, User $model)
     {
         if ($user->role==="SuperAdmin") return true;
-        if ($user->role==="Admin" && $model->role==="Editor" && $model->role==="User") return true;
+        if ($user->role==="Admin" && $model->role==="Editor") return true;
+        if ($user->role==="Admin" && $model->role==="User") return true;
         if ($user->role==="Editor" && $model->role==="User") return true;
         return false;
 
