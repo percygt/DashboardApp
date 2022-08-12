@@ -21,7 +21,8 @@
     );
     --blurB: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05));
     --shadowA: rgb(0 0 0 / 5%) 2px 4px 10px;
-    --transitionA: 0.5s ease;
+    --transitionA: 0.3s ease;
+    --transitionB: 0.53s ease;
     --lineA: 1px solid rgba(255, 255, 255, 0.1);
 }
 body {

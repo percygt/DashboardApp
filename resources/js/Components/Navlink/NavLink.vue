@@ -18,7 +18,7 @@ const classes = computed(() => (props.active ? "active" : ""));
     }
 }
 .active {
-    color: var(--textA);
+    color: var(--accentA);
 }
 </style>
 <template>

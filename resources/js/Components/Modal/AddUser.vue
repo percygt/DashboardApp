@@ -4,36 +4,41 @@ import BreezeInput from "@/Components/Input.vue";
 import BreezeLabel from "@/Components/Label.vue";
 import { onClickOutside } from "@vueuse/core";
 import { ref, computed } from "vue";
-import { usePage } from "@inertiajs/inertia-vue3";
-
-const modalRef = ref(null);
+import { Head, Link, useForm, usePage } from "@inertiajs/inertia-vue3";
 const props = defineProps({
-    isModalOpen: Boolean,
-    userData: Object,
+    isAddUserOpen: Boolean,
 });
-const errors = computed(() => usePage().props.value.errors);
-const hasErrors = computed(() => Object.keys(errors.value).length > 0);
+const modalRef = ref(null);
+const form = useForm({
+    name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
+    terms: false,
+});
 
-const emit = defineEmits(["update:isModalOpen", "submit"]);
+const hasErrors = computed(() => Object.keys(form.errors).length > 0);
+
+const emit = defineEmits(["update:isAddUserOpen", "submit"]);
 
 const close = () => {
-    emit("update:isModalOpen", false);
+    emit("update:isAddUserOpen", false);
 };
 
-onClickOutside(modalRef, () => emit("update:isModalOpen", false));
+onClickOutside(modalRef, () => close());
 const submit = () => {
-    props.userData.post(route("users.update", { id: props.userData.id }), {
+    form.post(route("users"), {
         onSuccess: () => {
-            props.userData.password = "";
+            form.password = "";
+            form.password_confirmation = "";
             close();
         },
     });
 };
-computed;
 </script>
 <template>
     <Teleport to="#modal">
-        <transition
+        <Transition
             enter-active-class="transition ease-out duration-200"
             enter-from-class="transform opacity-0 scale-95"
             enter-to-class="transform opacity-100 scale-100"
@@ -41,19 +46,15 @@ computed;
             leave-from-class="transform opacity-100 scale-100"
             leave-to-class="transform opacity-0 scale-95"
         >
-            <div class="modal-bg" v-if="isModalOpen">
+            <div class="modal-bg" v-if="isAddUserOpen">
                 <div class="modal relative" ref="modalRef">
                     <span
-                        @click="$emit('update:isModalOpen', false)"
+                        @click="close"
                         class="close absolute top-2 right-4 cursor-pointer text-xl"
                         >&times;</span
                     >
-
                     <form @submit.prevent="submit">
                         <div class="mt-4 relative">
-                            <div
-                                class="text-red-500 text-xs mt-1 absolute right-0"
-                            ></div>
                             <div
                                 v-if="$page.props.errors.name"
                                 v-text="$page.props.errors.name"
@@ -64,52 +65,30 @@ computed;
                                 id="name"
                                 type="text"
                                 class="mt-1 block w-full"
-                                v-model="userData.name"
+                                v-model="form.name"
+                                autofocus
+                                autocomplete="name"
                                 required
                             />
                         </div>
-
                         <div class="mt-4 relative">
-                            <div
-                                class="text-red-500 text-xs mt-1 absolute right-0"
-                            ></div>
                             <div
                                 v-if="$page.props.errors.email"
                                 v-text="$page.props.errors.email"
                                 class="text-red-500 text-xs mt-1 absolute right-0"
                             ></div>
                             <BreezeLabel for="email" value="Email" />
-
                             <BreezeInput
                                 id="email"
                                 type="email"
                                 class="mt-1 block w-full"
-                                v-model="userData.email"
+                                v-model="form.email"
+                                autocomplete="username"
                                 required
                             />
                         </div>
 
                         <div class="mt-4 relative">
-                            <div
-                                class="text-red-500 text-xs mt-1 absolute right-0"
-                            ></div>
-                            <!-- <input type="password" /> -->
-                            <BreezeLabel for="role" value="Role" />
-                            <select
-                                id="cars"
-                                name="cars"
-                                class="mt-1 block w-full rounded-md text-black"
-                                v-model="userData.role"
-                            >
-                                <option value="Admin">Admin</option>
-                                <option value="Editor">Editor</option>
-                                <option value="User">User</option>
-                            </select>
-                        </div>
-                        <div class="mt-4 relative">
-                            <div
-                                class="text-red-500 text-xs mt-1 absolute right-0"
-                            ></div>
                             <div
                                 v-if="$page.props.errors.password"
                                 v-text="$page.props.errors.password"
@@ -120,9 +99,28 @@ computed;
                                 id="password"
                                 type="password"
                                 class="mt-1 block w-full"
-                                v-model="userData.password"
+                                v-model="form.password"
                                 autocomplete="new-password"
-                                autofocus
+                                required
+                            />
+                        </div>
+
+                        <div class="mt-4 relative">
+                            <div
+                                v-if="$page.props.errors.password"
+                                v-text="$page.props.errors.password"
+                                class="text-red-500 text-xs mt-1 absolute right-0"
+                            ></div>
+                            <BreezeLabel
+                                for="password_confirmation"
+                                value="Confirm Password"
+                            />
+                            <BreezeInput
+                                id="password_confirmation"
+                                type="password"
+                                class="mt-1 block w-full"
+                                v-model="form.password_confirmation"
+                                autocomplete="new-password"
                                 required
                             />
                         </div>
@@ -130,16 +128,16 @@ computed;
                         <div class="flex items-center justify-end mt-4">
                             <BreezeButton
                                 class="ml-4"
-                                :class="{ 'opacity-25': userData.processing }"
-                                :disabled="userData.processing"
+                                :class="{ 'opacity-25': form.processing }"
+                                :disabled="form.processing"
                             >
-                                update
+                                Create
                             </BreezeButton>
                         </div>
                     </form>
                 </div>
             </div>
-        </transition>
+        </Transition>
     </Teleport>
 </template>
 

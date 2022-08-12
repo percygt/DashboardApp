@@ -1,19 +1,29 @@
 <script setup>
 import NavDropdown from "@/Components/Dropdown/NavDropdown.vue";
 import { Link } from "@inertiajs/inertia-vue3";
-
-import Search from "../Input/Search.vue";
+import MenuIcon from "vue-material-design-icons/Menu.vue";
+import { sidebar } from "@/Plugins/eventBus";
 </script>
 
 <template>
     <nav class="bgSecondaryB">
-        <div class="nav-left"></div>
+        <div class="nav-left" @click="sidebar.isActive = !sidebar.isActive">
+            <MenuIcon />
+        </div>
         <div class="nav-right">
             <NavDropdown align="right" width="100">
                 <template #trigger>
                     <span class="nav-profile">
                         <button type="button">
                             <i class="fa-solid fa-user"></i>
+                            <div class="user-details">
+                                <span class="users-name">{{
+                                    $page.props.auth.user.name
+                                }}</span>
+                                <span class="users-role">{{
+                                    $page.props.auth.user.role
+                                }}</span>
+                            </div>
                         </button>
                     </span>
                 </template>
@@ -51,9 +61,11 @@ nav {
     display: flex;
     height: 4rem;
     align-items: center;
-    padding: 0 2rem;
+    padding: 0 1rem;
     justify-content: space-between;
-
+    .nav-left {
+        cursor: pointer;
+    }
     .nav-right {
         .nav-profile {
             display: flex;
@@ -64,9 +76,14 @@ nav {
             box-shadow: var(--shadow);
             height: 4rem;
             padding: 0 1rem;
-            background-image: var(--blurA);
+            background: var(--secondaryA);
+            transition: var(--transitionA);
 
             button {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                min-width: 10rem;
                 i {
                     display: flex;
                     place-items: center;
@@ -78,9 +95,19 @@ nav {
                     border-radius: 1.25rem;
                     box-shadow: var(--shadow);
                 }
+                .user-details {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    .users-role {
+                        font-size: 0.8rem;
+                        color: var(--textC);
+                    }
+                }
             }
             &:hover {
-                transition: var(--transitionA);
+                background-image: var(--blurA);
+
                 color: var(--textB);
                 i {
                     transition: var(--transitionA);

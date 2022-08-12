@@ -65,9 +65,6 @@ class UserController extends Controller
      */
     public function store(Request $request, User $user)
     {
-      if (! Gate::allows('createUser', $user)) {
-        abort(403);
-    }
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],

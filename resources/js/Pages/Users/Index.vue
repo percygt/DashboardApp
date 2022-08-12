@@ -5,8 +5,11 @@ import { ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import debounce from "lodash/debounce";
 import UpdateUser from "@/Components/Modal/UpdateUser.vue";
+import AddUser from "@/Components/Modal/AddUser.vue";
+import AccountPlusIcon from "vue-material-design-icons/AccountPlus.vue";
 const props = defineProps({ users: Object, filters: Object, can: Object });
 const isModalOpen = ref(false);
+const isAddUserOpen = ref(false);
 const search = ref(props.filters.search);
 
 const userData = useForm({
@@ -42,7 +45,32 @@ export default {
     display: flex;
     align-items: flex-end;
     flex-direction: column;
+    background-color: var(--secondaryA);
     margin: 0 1rem;
+    .button-container {
+        margin: 0 1rem;
+        display: flex;
+        width: calc(100% - 2rem);
+        justify-content: space-between;
+        align-items: center;
+        button {
+            display: flex;
+            width: 6rem;
+            height: 2rem;
+            justify-content: center;
+            gap: 0.25rem;
+            align-items: center;
+            font-size: 0.8rem;
+            line-height: 1rem;
+            transition: var(--transitionB);
+            &:hover {
+                color: var(--textC);
+            }
+            .add-user {
+                margin-top: 0.15rem;
+            }
+        }
+    }
     table {
         border-radius: 1rem;
     }
@@ -65,20 +93,31 @@ export default {
 </style>
 <template>
     <UpdateUser v-model:isModalOpen="isModalOpen" v-model:userData="userData" />
+    <AddUser v-model:isAddUserOpen="isAddUserOpen" />
     <Head title="User Management" />
     <LayoutHeader>
         <span class="border-gray-300"> User Management</span>
-        <i class="fa-solid fa-caret-right"></i>
-        <span class="text-white">User List</span>
     </LayoutHeader>
-
     <div class="user-table overflow-x-auto relative shadow-md sm:rounded-lg">
-        <input
-            v-model="search"
-            type="text"
-            placeholder="Search User"
-            class="bg-gray-0 border my-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 pl-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        />
+        <div class="button-container">
+            <button
+                @click="
+                    {
+                        isAddUserOpen = true;
+                    }
+                "
+            >
+                <AccountPlusIcon :size="20" />
+                <span class="add-user">Add User</span>
+            </button>
+            <input
+                v-model="search"
+                type="text"
+                placeholder="Search User"
+                class="bg-gray-0 border my-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 pl-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+        </div>
+
         <table
             class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
         >

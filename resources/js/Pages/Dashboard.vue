@@ -5,7 +5,7 @@ import CardBarChart from "@/Components/Cards/CardBarChart.vue";
 import CardPageVisits from "@/Components/Cards/CardPageVisits.vue";
 import CardSocialTraffic from "@/Components/Cards/CardSocialTraffic.vue";
 import LayoutHeader from "@/Layouts/LayoutHeader.vue";
-import { permissions } from "@/Plugins/permissions";
+import { permissions } from "@/Plugins/eventBus";
 const props = defineProps({
     can: Object,
 });

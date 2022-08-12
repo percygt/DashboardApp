@@ -50,7 +50,7 @@ const alignmentClasses = computed(() => {
 </style>
 <template>
     <div class="relative">
-        <div @click="open = !open">
+        <div @click="open = !open" ref="profileRef">
             <slot name="trigger" />
         </div>
 
@@ -71,10 +71,7 @@ const alignmentClasses = computed(() => {
                 style="display: none"
                 @click="open = false"
             >
-                <div
-                    class="ring-1 ring-black ring-opacity-5 drop-content"
-                    ref="profileRef"
-                >
+                <div class="ring-1 ring-black ring-opacity-5 drop-content">
                     <slot name="content" />
                 </div>
             </div>
