@@ -14,7 +14,12 @@ import { Link } from "@inertiajs/inertia-vue3";
                 />
             </Link>
         </div>
-
+        <div
+            class="w-full sm:max-w-md mt-6 px-6 py-4 auth-form shadow-md overflow-hidden sm:rounded-lg demo"
+        >
+            <div>Demo</div>
+            <span>Email: admin@admin.com | Password: Admin12345</span>
+        </div>
         <div
             class="w-full sm:max-w-md mt-6 px-6 py-4 auth-form shadow-md overflow-hidden sm:rounded-lg"
         >
@@ -22,7 +27,7 @@ import { Link } from "@inertiajs/inertia-vue3";
         </div>
     </div>
 </template>
-<style scoped>
+<style lang="scss" scoped>
 .bg-img {
     background-image: url("/assets/img/bg-auth.svg");
     background-repeat: no-repeat;
@@ -35,5 +40,15 @@ import { Link } from "@inertiajs/inertia-vue3";
 
 .hover-minus:hover {
     scale: 0.975;
+}
+.demo {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8rem;
+    align-items: center;
+    div {
+        font-weight: 900;
+        font-size: 1rem;
+    }
 }
 </style>

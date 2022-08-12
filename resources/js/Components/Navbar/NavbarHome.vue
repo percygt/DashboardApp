@@ -41,7 +41,7 @@ nav {
     }
 
     .logo-svg {
-        height: 1.5rem;
+        height: 2rem;
     }
     /* CSS */
 }

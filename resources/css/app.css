@@ -68,10 +68,10 @@ body::-webkit-scrollbar-thumb {
     background-color: var(--secondaryB);
 }
 .bg-img {
-    background-image: url("/assets/img/bgB.svg");
+    background-image: url("/assets/img/bg-auth.svg");
     background-repeat: no-repeat;
     background-position: center;
-    background-size: auto;
+    background-size: cover;
 }
 .bg-imgB {
     background-image: linear-gradient(

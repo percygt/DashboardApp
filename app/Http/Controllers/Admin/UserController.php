@@ -24,7 +24,7 @@ class UserController extends Controller
           'users' => User::when($request->search,function($query,$search){
             $query->where('name','like',"%{$search}%");
           })
-
+          ->orderBy('id', 'ASC')
           ->paginate(5)
           ->withQueryString()
           ->through(fn($user)=>[
@@ -76,7 +76,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect('/users');
+        return back()->withInput()->with('mesage','User saved successfully');
     }
 
     /**
@@ -124,6 +124,7 @@ class UserController extends Controller
           'password' => Hash::make($request->password),
       ]);
 
+    return back()->withInput()->with('mesage','User updated successfully');
 
     }
 
@@ -138,6 +139,6 @@ class UserController extends Controller
 
       User::where('id', $id)->delete();
 
-      return back()->withInput()->with('mesage','User deleted cuccessfully');
+      return back()->withInput()->with('mesage','User deleted successfully');
     }
 }
