@@ -18,7 +18,7 @@ import { Link } from "@inertiajs/inertia-vue3";
             class="w-full sm:max-w-md mt-6 px-6 py-4 auth-form shadow-md overflow-hidden sm:rounded-lg demo"
         >
             <div>Demo</div>
-            <span>Email: admin@admin.com | Password: Admin12345</span>
+            <span>Email: admin@admin.com | Password: admin123</span>
         </div>
         <div
             class="w-full sm:max-w-md mt-6 px-6 py-4 auth-form shadow-md overflow-hidden sm:rounded-lg"
