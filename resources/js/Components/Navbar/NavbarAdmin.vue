@@ -36,10 +36,10 @@ import { sidebar } from "@/Plugins/eventBus";
                                 <i class="fa-solid fa-user"></i>
                                 My Account
                             </a>
-                            <Link href="#" method="post" as="button"
-                                ><i class="fa-solid fa-comments"></i>
+                            <a href="https://t.me/prcygt" target="_blank">
+                                <i class="fa-solid fa-comments"></i>
                                 Support
-                            </Link>
+                            </a>
                             <Link
                                 :href="route('logout')"
                                 method="post"
