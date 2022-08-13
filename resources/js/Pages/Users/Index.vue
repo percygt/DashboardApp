@@ -135,7 +135,7 @@ export default {
                     :is="link.url ? 'Link' : 'span'"
                     v-for="link in users.links"
                     :href="link.url"
-                    v-html="link.label == '&laquo; Previous' ? '<' : link.label"
+                    v-html="link.label"
                     :class="
                         link.url
                             ? link.active
