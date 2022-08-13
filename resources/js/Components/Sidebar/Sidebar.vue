@@ -1,10 +1,5 @@
 <script setup>
-import AppLogoB from "@/Components/ApplicationLogoB.vue";
-import AppLogoA from "@/Components/ApplicationLogoA.vue";
-import NavLink from "@/Components/Navlink/NavLink.vue";
-import { Link } from "@inertiajs/inertia-vue3";
-import { onMounted, onUnmounted, ref } from "vue";
-import { permissions, sidebar } from "@/Plugins/eventBus";
+import { sidebar } from "@/Plugins/eventBus";
 import SidebarWide from "./SidebarWide.vue";
 import SidebarNarrow from "./SidebarNarrow.vue";
 </script>

@@ -25,7 +25,7 @@ class UserController extends Controller
             $query->where('name','like',"%{$search}%");
           })
           ->orderBy('id', 'ASC')
-          ->paginate(5)
+          ->paginate(10)
           ->withQueryString()
           ->through(fn($user)=>[
             'id'=>$user->id,

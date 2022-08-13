@@ -46,61 +46,7 @@ export default {
     layout: LayoutAuthenticated,
 };
 </script>
-<style lang="scss" scoped>
-.dash-bottom {
-    margin: 2rem 0;
-}
-.user-table {
-    display: flex;
-    align-items: flex-end;
-    flex-direction: column;
-    background-color: var(--secondaryA);
-    margin: 0 1rem;
-    .button-container {
-        margin: 0 2rem;
-        display: flex;
-        width: calc(100% - 4rem);
-        justify-content: space-between;
-        align-items: center;
-        button {
-            display: flex;
-            width: 8rem;
-            height: 2rem;
-            justify-content: center;
-            gap: 0.25rem;
-            align-items: center;
-            font-size: 1rem;
-            line-height: 1rem;
-            transition: var(--transitionB);
-            &:hover {
-                color: var(--textC);
-                text-decoration: underline;
-            }
-            .add-user {
-                margin-top: 0.15rem;
-            }
-        }
-    }
-    table {
-        border-radius: 1rem;
-    }
 
-    .paginate {
-        padding: 1rem;
-        > * {
-            padding: 0.5rem 1rem;
-            &:hover {
-                color: var(--accentA);
-            }
-        }
-    }
-}
-.page-active {
-    color: var(--accentA);
-    font-size: 1.2rem;
-    font-weight: 900;
-}
-</style>
 <template>
     <UpdateUser v-model:isModalOpen="isModalOpen" v-model:userData="userData" />
     <AddUser v-model:isAddUserOpen="isAddUserOpen" />
@@ -108,104 +54,204 @@ export default {
     <LayoutHeader>
         <span class="border-gray-300"> User Management</span>
     </LayoutHeader>
-    <div class="user-table overflow-x-auto relative shadow-md sm:rounded-lg">
-        <div class="button-container">
-            <div>
-                <button
-                    class="text-blue-600"
-                    v-if="props.can.create_user"
-                    @click="
-                        {
-                            isAddUserOpen = true;
-                        }
-                    "
-                >
-                    <AccountPlusIcon :size="20" />
-                    <span class="add-user">Create User</span>
-                </button>
+    <div class="table-container">
+        <div
+            class="user-table overflow-x-auto relative shadow-md sm:rounded-lg"
+        >
+            <div class="button-container">
+                <div>
+                    <button
+                        class="text-blue-600"
+                        v-if="props.can.create_user"
+                        @click="
+                            {
+                                isAddUserOpen = true;
+                            }
+                        "
+                    >
+                        <AccountPlusIcon :size="20" />
+                        <span class="add-user">Create User</span>
+                    </button>
+                </div>
+
+                <input
+                    v-model="search"
+                    type="text"
+                    placeholder="Search User"
+                    class="bg-gray-0 border my-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 pl-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
             </div>
 
-            <input
-                v-model="search"
-                type="text"
-                placeholder="Search User"
-                class="bg-gray-0 border my-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 pl-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            />
-        </div>
+            <table class="dark:text-gray-400">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="user in users.data" :key="user.id">
+                        <th scope="row">
+                            {{ user.id }}
+                        </th>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            {{ user.role }}
+                        </td>
+                        <td>
+                            <a
+                                @click="
+                                    {
+                                        isModalOpen = true;
+                                        userData.id = user.id;
+                                        userData.name = user.name;
+                                        userData.email = user.email;
+                                        userData.role = user.role;
+                                    }
+                                "
+                                v-if="user.can.update"
+                                href="#"
+                                class="font-medium text-blue-600 dark:text-blue-500 mx-1"
+                                ><AccountEditIcon
+                            /></a>
+                            <a
+                                @click="destroy(user.id)"
+                                v-if="user.can.update"
+                                href="#"
+                                class="font-medium text-blue-600 dark:text-blue-500 mx-1"
+                                ><TrashCanIcon
+                            /></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <table
-            class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-        >
-            <thead
-                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-            >
-                <tr>
-                    <th scope="col" class="py-3 px-6">#</th>
-                    <th scope="col" class="py-3 px-6">Name</th>
-                    <th scope="col" class="py-3 px-6">Email</th>
-                    <th scope="col" class="py-3 px-6">Role</th>
-                    <th scope="col" class="py-3 px-6">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr
-                    v-for="user in users.data"
-                    :key="user.id"
-                    class="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
-                >
-                    <th
-                        scope="row"
-                        class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                        {{ user.id }}
-                    </th>
-                    <td class="py-4 px-6">{{ user.name }}</td>
-                    <td class="py-4 px-6">{{ user.email }}</td>
-                    <td class="py-4 px-6">
-                        {{ user.role }}
-                    </td>
-                    <td class="flex py-4 px-6">
-                        <a
-                            @click="
-                                {
-                                    isModalOpen = true;
-                                    userData.id = user.id;
-                                    userData.name = user.name;
-                                    userData.email = user.email;
-                                    userData.role = user.role;
-                                }
-                            "
-                            v-if="user.can.update"
-                            href="#"
-                            class="font-medium text-blue-600 dark:text-blue-500 mx-1"
-                            ><AccountEditIcon
-                        /></a>
-                        <a
-                            @click="destroy(user.id)"
-                            v-if="user.can.update"
-                            href="#"
-                            class="font-medium text-blue-600 dark:text-blue-500 mx-1"
-                            ><TrashCanIcon
-                        /></a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div class="paginate">
-            <Link
-                :is="link.url ? 'Link' : 'span'"
-                v-for="link in users.links"
-                :href="link.url"
-                v-html="link.label"
-                :class="
-                    link.url
-                        ? link.active
-                            ? 'page-active'
-                            : ''
-                        : 'text-gray-400'
-                "
-            ></Link>
+            <div class="paginate">
+                <Link
+                    :is="link.url ? 'Link' : 'span'"
+                    v-for="link in users.links"
+                    :href="link.url"
+                    v-html="link.label == '&laquo; Previous' ? '<' : link.label"
+                    :class="
+                        link.url
+                            ? link.active
+                                ? 'page-active'
+                                : ''
+                            : 'text-gray-400'
+                    "
+                ></Link>
+            </div>
         </div>
     </div>
 </template>
+<style lang="scss" scoped>
+.dash-bottom {
+    margin: 2rem 0;
+}
+.table-container {
+    display: flex;
+    justify-content: center;
+    .user-table {
+        width: 90vw;
+        max-width: 100rem;
+        display: flex;
+        align-items: flex-end;
+        flex-direction: column;
+        background-color: var(--secondaryA);
+        margin: 1rem;
+        .button-container {
+            margin: 0 2rem;
+            display: flex;
+            width: calc(100% - 4rem);
+            justify-content: space-between;
+            align-items: center;
+            button {
+                display: flex;
+                width: 8rem;
+                height: 2rem;
+                justify-content: center;
+                gap: 0.25rem;
+                align-items: center;
+                font-size: 1rem;
+                line-height: 1rem;
+                transition: var(--transitionB);
+                &:hover {
+                    color: var(--textC);
+                    text-decoration: underline;
+                }
+                .add-user {
+                    margin-top: 0.15rem;
+                }
+            }
+        }
+        table {
+            width: 100%;
+            font-size: 0.875rem /* 14px */;
+            line-height: 1.25rem /* 20px */;
+            text-align: left;
+            thead {
+                z-index: 999999;
+                tr {
+                    background-color: var(--accentB);
+                    height: 2.5rem;
+                    color: var(--textA);
+                    th {
+                        padding-left: 1rem;
+                        &:first-child {
+                            border-top-left-radius: 0.5rem;
+                            border-bottom-left-radius: 0.5rem;
+                            width: 5rem;
+                        }
+                        &:last-child {
+                            border-top-right-radius: 0.5rem;
+                            border-bottom-right-radius: 0.5rem;
+                        }
+                        &:not(:first-child, :last-child) {
+                            width: 25%;
+                        }
+                    }
+                }
+            }
+            tbody {
+                background-color: var(--primaryB);
+                tr {
+                    height: 3rem;
+
+                    td,
+                    th {
+                        padding-left: 1rem;
+                    }
+                    td:last-child {
+                        display: flex;
+                        align-items: center;
+                        height: 3rem;
+                    }
+                }
+                tr:nth-child(even) {
+                    background-color: var(--secondaryB);
+                }
+            }
+        }
+
+        .paginate {
+            padding: 1rem;
+            > * {
+                padding: 0.5rem 1rem;
+                &:hover {
+                    color: var(--accentA);
+                }
+            }
+        }
+    }
+}
+
+.page-active {
+    color: var(--accentA);
+    font-size: 1.2rem;
+    font-weight: 900;
+}
+</style>

@@ -1,6 +1,6 @@
 <script setup>
 import { Link } from "@inertiajs/inertia-vue3";
-import logo from "@/Assets/Logo/logoB.svg";
+import AppLogoB from "@/Components/ApplicationLogoB.vue";
 defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
@@ -48,7 +48,7 @@ nav {
 </style>
 <template>
     <nav v-if="canLogin" class="sm:block">
-        <img :src="logo" alt="..." class="logo-svg" />
+        <AppLogoB />
         <div class="nav-right">
             <Link
                 v-if="$page.props.auth.user"
