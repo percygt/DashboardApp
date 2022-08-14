@@ -1,16 +1,15 @@
 <script setup>
 import AppLogoB from "@/Components/ApplicationLogoB.vue";
-import AppLogoA from "@/Components/ApplicationLogoA.vue";
 import NavLink from "@/Components/Navlink/NavLink.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import { onMounted, onUnmounted, ref } from "vue";
-import { permissions, sidebar } from "@/Plugins/eventBus";
 import ViewDashboardIcon from "vue-material-design-icons/ViewDashboard.vue";
 import AccountGroupIcon from "vue-material-design-icons/AccountGroup.vue";
 import GithubIcon from "vue-material-design-icons/Github.vue";
 import LinkedinIcon from "vue-material-design-icons/Linkedin.vue";
 import WebIcon from "vue-material-design-icons/Web.vue";
 import Telegram from "@/Assets/Images/Telegram.vue";
+import { sidebar } from "@/Plugins/eventBus";
 
 const closeOnEscape = (e) => {
     if (open.value && e.key === "Escape") {
@@ -25,9 +24,9 @@ onUnmounted(() => document.removeEventListener("keydown", closeOnEscape));
 
 <template>
     <div className="sidebar-a">
-        <Link :href="route('home')" class="side-link">
+        <div class="side-link" @click="sidebar.isActive = !sidebar.isActive">
             <AppLogoB class="app-logo" />
-        </Link>
+        </div>
     </div>
     <div class="sidebar-content">
         <div className="sidebar-b">
@@ -88,6 +87,7 @@ onUnmounted(() => document.removeEventListener("keydown", closeOnEscape));
         display: flex;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
 
         .app-logo {
             height: 2.5rem;
