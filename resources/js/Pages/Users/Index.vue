@@ -145,6 +145,7 @@ export default {
                                     : ''
                                 : 'text-gray-400'
                         "
+                        preserve-scroll
                     ></Link>
                 </div>
             </div>
