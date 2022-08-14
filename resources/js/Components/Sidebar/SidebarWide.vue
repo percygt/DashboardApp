@@ -35,14 +35,14 @@ onUnmounted(() => document.removeEventListener("keydown", closeOnEscape));
             <div class="sidebar-b-link">
                 <NavLink
                     :href="route('dashboard')"
-                    :active="route().current('dashboard')"
+                    :active="$page.component === 'Dashboard' ? true : false"
                 >
                     <ViewDashboardIcon :size="30" />
                     Dashboard
                 </NavLink>
                 <NavLink
                     :href="route('users')"
-                    :active="$page.url === '/users' ? true : false"
+                    :active="$page.component === 'Users/Index' ? true : false"
                 >
                     <AccountGroupIcon :size="30" />
                     User Management
