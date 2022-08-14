@@ -105,7 +105,7 @@ export default {
                                 {{ user.role }}
                             </td>
                             <td>
-                                <a
+                                <button
                                     @click="
                                         {
                                             isModalOpen = true;
@@ -116,17 +116,17 @@ export default {
                                         }
                                     "
                                     v-if="user.can.update"
-                                    href="#"
                                     class="font-medium text-blue-600 dark:text-blue-500 mx-1"
-                                    ><AccountEditIcon
-                                /></a>
-                                <a
+                                >
+                                    <AccountEditIcon />
+                                </button>
+                                <button
                                     @click="destroy(user.id)"
                                     v-if="user.can.update"
-                                    href="#"
                                     class="font-medium text-blue-600 dark:text-blue-500 mx-1"
-                                    ><TrashCanIcon
-                                /></a>
+                                >
+                                    <TrashCanIcon />
+                                </button>
                             </td>
                         </tr>
                     </tbody>
